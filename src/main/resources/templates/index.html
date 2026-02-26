@@ -30,13 +30,18 @@
             <th>Description</th>
             <th>Amount</th>
             <th>Actions</th>
+            <th>Date</th>
+            <th>Operations</th>
         </tr>
         </thead>
+        <button onclick="window.location.href='/dashboard'">View Dashboard</button>
         <tbody>
         <tr th:each="expense : ${expenses}">
             <td th:text="${expense.id}">1</td>
             <td th:text="${expense.description}">Description</td>
             <td th:text="${expense.amount}">Amount</td>
+            <td th:text="${expense.category}">Category</td>
+            <td th:text="${expense.expenseDate}">Date</td>
             <td>
                 <a class="btn btn-primary btn-sm" th:href="@{/editExpense/{id}(id=${expense.id})}">
                     <i class="fas fa-pencil-alt"></i>

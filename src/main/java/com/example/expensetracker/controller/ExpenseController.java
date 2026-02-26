@@ -82,6 +82,11 @@ public class ExpenseController {
         expenseService.deleteExpenseById(id);
         return "redirect:/";
     }
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "dashboard";
+    }
+    
 
     // NEW: Daily Summary API (for charts)
     @GetMapping("/expenses/daily-summary")

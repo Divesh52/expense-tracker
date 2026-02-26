@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        canvas {
+            width: 100% !important;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Expense Dashboard</h2>
+
+    <canvas id="categoryChart"></canvas>
+    <br><br>
+    <canvas id="monthlyChart"></canvas>
+</div>
+
+<script>
+fetch('/api/category-summary')
+.then(response => response.json())
+.then(data => {
+    const labels = data.map(item => item[0]);
+    const values = data.map(item => item[1]);
+
+    new Chart(document.getElementById('categoryChart'), {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values
+            }]
+        }
+    });
+});
+
+fetch('/api/monthly-summary')
+.then(response => response.json())
+.then(data => {
+    const labels = data.map(item => "Month " + item[0]);
+    const values = data.map(item => item[1]);
+
+    new Chart(document.getElementById('monthlyChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Monthly Expense',
+                data: values
+            }]
+        }
+    });
+});
+</script>
+
+</body>
+</html>

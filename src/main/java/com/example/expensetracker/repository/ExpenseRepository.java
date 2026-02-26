@@ -18,5 +18,10 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
            "ORDER BY e.expenseDate")
     List<Object[]> getDailyExpenseSummary();
 
+    @Query("SELECT e.category, SUM(e.amount) FROM Expense e GROUP BY e.category")
+    List<Object[]> getTotalAmountByCategory();
+
+    @Query("SELECT MONTH(e.expenseDate), SUM(e.amount) FROM Expense e GROUP BY MONTH(e.expenseDate)")
+    List<Object[]> getMonthlyExpenses();
     List<Expense> findByExpenseDate(LocalDate expenseDate);
 }
